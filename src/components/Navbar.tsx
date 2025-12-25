@@ -8,11 +8,11 @@ import { cn } from "@/lib/utils";
 
 const navLinks = [
   { href: "/", label: "Beranda" },
+  { href: "/tentang", label: "Tentang" },
   { href: "/layanan", label: "Layanan" },
   { href: "/tim", label: "Tim Kami" },
   { href: "/edukasi", label: "Edukasi" },
   { href: "/kalkulator", label: "Kalkulator" },
-  { href: "/konsultasi", label: "Konsultasi" },
   { href: "/kontak", label: "Kontak" },
 ];
 

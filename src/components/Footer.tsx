@@ -22,7 +22,8 @@ const footerLinks = {
     { href: "/layanan#estate", label: "Estate Planning" },
   ],
   perusahaan: [
-    { href: "/tim", label: "Tim Kami" },
+    { href: "/tentang", label: "Tentang Kami" },
+    { href: "/tim", label: "Tim Advisor" },
     { href: "/edukasi", label: "Artikel & Edukasi" },
     { href: "/kalkulator", label: "Kalkulator Finansial" },
     { href: "/konsultasi", label: "Konsultasi" },
