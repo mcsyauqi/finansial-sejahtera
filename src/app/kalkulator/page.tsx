@@ -11,6 +11,17 @@ import {
   ArrowRight,
   Info,
   RefreshCw,
+  Target,
+  BarChart3,
+  Lightbulb,
+  HelpCircle,
+  ChevronDown,
+  ChevronUp,
+  Shield,
+  Wallet,
+  Building2,
+  Gem,
+  Coins,
 } from "lucide-react";
 
 type CalculatorType = "pensiun" | "pendidikan" | "investasi";
@@ -39,21 +50,13 @@ function PensiunCalculator() {
 
   const calculate = () => {
     const yearsToRetirement = retirementAge - currentAge;
-    const yearsInRetirement = 25; // Asumsi hidup sampai 80 tahun dari pensiun 55
+    const yearsInRetirement = 25;
 
-    // Future monthly expense considering inflation
     const futureMonthlyExpense = monthlyExpense * Math.pow(1 + inflation / 100, yearsToRetirement);
-
-    // Total needed fund (using 4% withdrawal rate rule)
     const neededFund = futureMonthlyExpense * 12 * yearsInRetirement;
-
-    // Future value of current savings
     const futureCurrentSavings = currentSavings * Math.pow(1 + returnRate / 100, yearsToRetirement);
-
-    // Gap to fill
     const gap = Math.max(0, neededFund - futureCurrentSavings);
 
-    // Monthly investment needed (PMT formula)
     const monthlyReturnRate = returnRate / 100 / 12;
     const totalMonths = yearsToRetirement * 12;
     const monthlyInvestment =
@@ -181,17 +184,10 @@ function PendidikanCalculator() {
 
   const calculate = () => {
     const yearsToTarget = targetAge - childAge;
-
-    // Future education cost considering inflation
     const futureCost = currentCost * Math.pow(1 + inflation / 100, yearsToTarget);
-
-    // Future value of current savings
     const futureCurrentSavings = currentSavings * Math.pow(1 + returnRate / 100, yearsToTarget);
-
-    // Gap to fill
     const gap = Math.max(0, futureCost - futureCurrentSavings);
 
-    // Monthly investment needed
     const monthlyReturnRate = returnRate / 100 / 12;
     const totalMonths = yearsToTarget * 12;
     const monthlyInvestment =
@@ -319,10 +315,7 @@ function InvestasiCalculator() {
     const monthlyRate = returnRate / 100 / 12;
     const totalMonths = years * 12;
 
-    // Future value of initial investment
     const fvInitial = initialInvestment * Math.pow(1 + returnRate / 100, years);
-
-    // Future value of monthly investments (FV of annuity)
     const fvMonthly =
       monthlyInvestment * ((Math.pow(1 + monthlyRate, totalMonths) - 1) / monthlyRate);
 
@@ -417,8 +410,118 @@ function InvestasiCalculator() {
   );
 }
 
+const investmentTypes = [
+  {
+    icon: Wallet,
+    name: "Deposito",
+    return: "3-5%",
+    risk: "Rendah",
+    riskColor: "text-green-600",
+    horizon: "1-12 bulan",
+    minInvestment: "Rp 1 juta",
+    description: "Cocok untuk dana darurat dan tujuan jangka pendek",
+  },
+  {
+    icon: Shield,
+    name: "Obligasi/SBN",
+    return: "5-7%",
+    risk: "Rendah-Menengah",
+    riskColor: "text-yellow-600",
+    horizon: "1-3 tahun",
+    minInvestment: "Rp 1 juta",
+    description: "Pendapatan tetap dengan jaminan pemerintah",
+  },
+  {
+    icon: Building2,
+    name: "Reksa Dana Campuran",
+    return: "7-12%",
+    risk: "Menengah",
+    riskColor: "text-yellow-600",
+    horizon: "3-5 tahun",
+    minInvestment: "Rp 100 ribu",
+    description: "Diversifikasi otomatis antara saham dan obligasi",
+  },
+  {
+    icon: TrendingUp,
+    name: "Reksa Dana Saham",
+    return: "10-15%",
+    risk: "Tinggi",
+    riskColor: "text-red-500",
+    horizon: "5+ tahun",
+    minInvestment: "Rp 100 ribu",
+    description: "Potensi return tinggi untuk jangka panjang",
+  },
+  {
+    icon: Gem,
+    name: "Saham Langsung",
+    return: "Variabel",
+    risk: "Tinggi",
+    riskColor: "text-red-500",
+    horizon: "5+ tahun",
+    minInvestment: "Rp 100 ribu",
+    description: "Membutuhkan analisis dan pemantauan aktif",
+  },
+  {
+    icon: Coins,
+    name: "Emas",
+    return: "5-10%",
+    risk: "Menengah",
+    riskColor: "text-yellow-600",
+    horizon: "3+ tahun",
+    minInvestment: "0.01 gram",
+    description: "Lindung nilai terhadap inflasi",
+  },
+];
+
+const tips = [
+  {
+    icon: Target,
+    title: "Tentukan Tujuan",
+    description: "Identifikasi tujuan finansial Anda dengan jelas: pensiun, pendidikan anak, atau dana darurat.",
+  },
+  {
+    icon: BarChart3,
+    title: "Ketahui Profil Risiko",
+    description: "Pahami toleransi risiko Anda untuk memilih instrumen investasi yang sesuai.",
+  },
+  {
+    icon: RefreshCw,
+    title: "Investasi Rutin",
+    description: "Konsisten berinvestasi setiap bulan (Dollar Cost Averaging) untuk hasil optimal.",
+  },
+  {
+    icon: Lightbulb,
+    title: "Diversifikasi",
+    description: "Jangan menaruh semua telur dalam satu keranjang. Sebarkan investasi Anda.",
+  },
+];
+
+const faqs = [
+  {
+    question: "Bagaimana cara kerja kalkulator ini?",
+    answer: "Kalkulator ini menggunakan rumus finansial standar untuk menghitung kebutuhan dana berdasarkan input Anda seperti usia, target, inflasi, dan asumsi return investasi. Perhitungan menggunakan konsep time value of money dan future value calculations.",
+  },
+  {
+    question: "Apakah hasil perhitungan ini akurat?",
+    answer: "Hasil perhitungan adalah estimasi berdasarkan asumsi yang Anda masukkan. Return investasi aktual dapat bervariasi dan inflasi bisa berbeda dari asumsi. Gunakan hasil ini sebagai panduan awal dan konsultasikan dengan advisor kami untuk perencanaan yang lebih detail.",
+  },
+  {
+    question: "Berapa asumsi inflasi yang tepat?",
+    answer: "Inflasi umum di Indonesia rata-rata 3-5% per tahun. Namun, inflasi pendidikan bisa mencapai 10-15% per tahun. Untuk perencanaan konservatif, gunakan asumsi inflasi yang lebih tinggi.",
+  },
+  {
+    question: "Instrumen investasi apa yang sebaiknya dipilih?",
+    answer: "Pemilihan instrumen tergantung pada profil risiko dan jangka waktu Anda. Untuk tujuan jangka pendek (< 3 tahun), pilih instrumen rendah risiko seperti deposito atau obligasi. Untuk jangka panjang (> 5 tahun), reksa dana saham atau saham langsung bisa memberikan return lebih tinggi.",
+  },
+  {
+    question: "Apakah saya bisa berkonsultasi lebih lanjut?",
+    answer: "Tentu! Kalkulator ini hanya memberikan gambaran awal. Untuk perencanaan yang lebih komprehensif dan personal, kami menyediakan layanan konsultasi gratis dengan advisor bersertifikat kami.",
+  },
+];
+
 export default function KalkulatorPage() {
   const [activeCalculator, setActiveCalculator] = useState<CalculatorType>("pensiun");
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const calculators = [
     {
@@ -461,6 +564,30 @@ export default function KalkulatorPage() {
         </div>
       </section>
 
+      {/* Tips Section */}
+      <section className="py-12 bg-white border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-4 gap-6">
+            {tips.map((tip, index) => (
+              <motion.div
+                key={tip.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="text-center"
+              >
+                <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <tip.icon className="w-7 h-7 text-primary" />
+                </div>
+                <h3 className="font-semibold text-text mb-2">{tip.title}</h3>
+                <p className="text-sm text-text/60">{tip.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Calculator Section */}
       <section className="py-16 bg-background">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -500,6 +627,122 @@ export default function KalkulatorPage() {
         </div>
       </section>
 
+      {/* Investment Comparison */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl font-bold text-text font-heading mb-4">
+              Perbandingan Instrumen Investasi
+            </h2>
+            <p className="text-text/70 max-w-2xl mx-auto">
+              Pilih instrumen investasi yang sesuai dengan profil risiko dan tujuan finansial Anda
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {investmentTypes.map((investment, index) => (
+              <motion.div
+                key={investment.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-background rounded-2xl p-6 hover:shadow-lg transition-shadow"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                    <investment.icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-text">{investment.name}</h3>
+                    <p className={`text-sm font-medium ${investment.riskColor}`}>
+                      Risiko: {investment.risk}
+                    </p>
+                  </div>
+                </div>
+                <p className="text-sm text-text/70 mb-4">{investment.description}</p>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-text/60">Return per Tahun</span>
+                    <span className="font-medium text-text">{investment.return}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-text/60">Horizon Waktu</span>
+                    <span className="font-medium text-text">{investment.horizon}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-text/60">Minimum Investasi</span>
+                    <span className="font-medium text-text">{investment.minInvestment}</span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 bg-background">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl font-bold text-text font-heading mb-4">
+              Pertanyaan Umum
+            </h2>
+            <p className="text-text/70">
+              Jawaban atas pertanyaan yang sering diajukan tentang kalkulator dan perencanaan finansial
+            </p>
+          </motion.div>
+
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white rounded-xl overflow-hidden"
+              >
+                <button
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+                >
+                  <span className="font-medium text-text flex items-center gap-3">
+                    <HelpCircle className="w-5 h-5 text-primary" />
+                    {faq.question}
+                  </span>
+                  {openFaq === index ? (
+                    <ChevronUp className="w-5 h-5 text-text/40" />
+                  ) : (
+                    <ChevronDown className="w-5 h-5 text-text/40" />
+                  )}
+                </button>
+                {openFaq === index && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="px-6 pb-4"
+                  >
+                    <p className="text-text/70 pl-8">{faq.answer}</p>
+                  </motion.div>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -511,17 +754,25 @@ export default function KalkulatorPage() {
             <h2 className="text-2xl md:text-3xl font-bold text-text font-heading mb-4">
               Butuh Analisis Lebih Detail?
             </h2>
-            <p className="text-text/70 mb-8">
+            <p className="text-text/70 mb-8 max-w-2xl mx-auto">
               Kalkulator ini hanya memberikan estimasi. Untuk perencanaan yang lebih akurat
-              dan personal, konsultasikan dengan advisor kami.
+              dan personal, konsultasikan dengan advisor bersertifikat kami secara gratis.
             </p>
-            <Link
-              href="/konsultasi"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-accent text-white font-semibold rounded-xl hover:bg-accent/90 transition-colors shadow-lg shadow-accent/25"
-            >
-              Konsultasi dengan Advisor
-              <ArrowRight size={20} />
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/konsultasi"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent text-white font-semibold rounded-xl hover:bg-accent/90 transition-colors shadow-lg shadow-accent/25"
+              >
+                Konsultasi dengan Advisor
+                <ArrowRight size={20} />
+              </Link>
+              <Link
+                href="/edukasi"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary/10 text-primary font-semibold rounded-xl hover:bg-primary/20 transition-colors"
+              >
+                Pelajari Lebih Lanjut
+              </Link>
+            </div>
           </motion.div>
         </div>
       </section>
